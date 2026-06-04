@@ -1,0 +1,316 @@
+// src/components/Navbar.jsx
+import { useState, useEffect } from "react";
+import { AiOutlineMenu } from "react-icons/ai";
+import { IoCloseSharp } from "react-icons/io5";
+import { Link } from "react-scroll";
+import { HiCode } from "react-icons/hi";
+import { 
+  FaHome, 
+  FaUser, 
+  FaBriefcase, 
+  FaCode, 
+  FaEnvelope ,FaCertificate
+} from "react-icons/fa";
+import { FaFileAlt } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+
+function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("Home");
+  const [hoveredItem, setHoveredItem] = useState(null);
+
+  const navItems = [
+    { id: 1, text: "Home", icon: FaHome },
+    { id: 2, text: "About", icon: FaUser },
+    { id: 3, text: "Portfolio", icon: FaBriefcase },
+    { id: 4, text: "Experience", icon: FaCode },
+    { id: 5, text: "Certificates", icon: FaCertificate },
+    { id: 6, text: "Resume", icon: FaFileAlt },
+    { id: 7, text: "Contacts", icon: FaEnvelope },
+  ];
+
+  // Handle scroll effect for navbar background
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [menuOpen]);
+
+  // Navbar variants for animations
+  const navbarVariants = {
+    hidden: { y: -100 },
+    visible: { 
+      y: 0, 
+      transition: { 
+        type: "spring", 
+        stiffness: 100, 
+        damping: 20,
+        duration: 0.6 
+      } 
+    }
+  };
+
+  const mobileMenuVariants = {
+    hidden: { x: "100%" },
+    visible: { 
+      x: 0, 
+      transition: { 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 30 
+      } 
+    },
+    exit: { 
+      x: "100%", 
+      transition: { 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 30 
+      } 
+    }
+  };
+
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+  };
+
+  return (
+    <>
+      {/* Navbar with dynamic background */}
+      <motion.div
+        variants={navbarVariants}
+        initial="hidden"
+        animate="visible"
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-black/90 backdrop-blur-xl shadow-2xl border-b border-white/10 shadow-cyan-500/10"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16 md:h-20">
+            {/* Logo Section - Developer Style with Enhanced Animation */}
+            <Link
+              to="Home"
+              smooth={true}
+              duration={500}
+              offset={-70}
+              className="group flex items-center gap-3 cursor-pointer relative"
+            >
+              {/* Animated glow behind logo */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full blur-md opacity-70 group-hover:opacity-100 transition duration-300 animate-pulse"></div>
+                <img
+                  src="/profile.png"
+                  className="relative h-10 w-10 md:h-12 md:w-12 rounded-full border-2 border-white/30 object-cover transition-all duration-300 group-hover:scale-105 group-hover:border-cyan-400"
+                  alt="Profile"
+                />
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="font-mono font-bold text-lg md:text-xl bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent group-hover:from-cyan-400 group-hover:to-blue-500 transition-all duration-300">
+                  Rustam<span className="text-cyan-400">.dev</span>
+                </h1>
+                <p className="text-[10px] md:text-xs text-gray-400 flex items-center gap-1 group-hover:text-gray-300 transition-colors">
+                  <HiCode className="text-cyan-400 animate-pulse" /> Developer
+                </p>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation - Enhanced */}
+            <div className="hidden md:flex items-center gap-1 bg-white/5 backdrop-blur-sm rounded-full p-1 border border-white/10 shadow-lg">
+              {navItems.map(({ id, text, icon: Icon }) => (
+                <Link
+                  key={id}
+                  to={text}
+                  smooth={true}
+                  duration={500}
+                  offset={-70}
+                  spy={true}
+                  onSetActive={() => setActiveSection(text)}
+                  onMouseEnter={() => setHoveredItem(id)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  className={`relative px-5 py-2 rounded-full text-sm font-medium cursor-pointer transition-all duration-300 overflow-hidden ${
+                    activeSection === text
+                      ? "text-white"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  {/* Active Background */}
+                  {activeSection === text && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"
+                      transition={{ type: "spring", duration: 0.5 }}
+                    />
+                  )}
+                  
+                  {/* Hover Effect */}
+                  {hoveredItem === id && activeSection !== text && (
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      className="absolute inset-0 bg-white/10 rounded-full"
+                    />
+                  )}
+                  
+                  {/* Content */}
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Icon size={14} />
+                    {text}
+                  </span>
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile Menu Button - Enhanced */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden p-2 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 text-white hover:bg-white/10 hover:border-cyan-500/50 transition-all duration-300"
+            >
+              <AiOutlineMenu size={24} />
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Mobile Drawer Menu - Enhanced with Animations */}
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              variants={backdropVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md"
+              onClick={() => setMenuOpen(false)}
+            />
+
+            {/* Drawer */}
+            <motion.div
+              variants={mobileMenuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed right-0 top-0 h-full w-80 sm:w-96 z-50 bg-gradient-to-br from-gray-900 via-gray-900 to-black shadow-2xl border-l border-white/10"
+            >
+              {/* Drawer Header - Enhanced */}
+              <div className="flex justify-between items-center p-6 border-b border-white/10 bg-gradient-to-r from-cyan-500/10 to-blue-500/10">
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex items-center gap-3"
+                >
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full blur-md animate-pulse"></div>
+                    <img
+                      src="/profile.png"
+                      className="relative h-12 w-12 rounded-full border-2 border-cyan-400"
+                      alt="Profile"
+                    />
+                  </div>
+                  <div>
+                    <h2 className="font-bold text-white text-lg">Rustam Khan</h2>
+                    <p className="text-xs text-cyan-400 flex items-center gap-1">
+                      <HiCode size={12} /> Full Stack Developer
+                    </p>
+                  </div>
+                </motion.div>
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setMenuOpen(false)}
+                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                >
+                  <IoCloseSharp size={24} className="text-white" />
+                </motion.button>
+              </div>
+
+              {/* Drawer Navigation - Enhanced */}
+              <nav className="flex flex-col p-6 gap-3">
+                {navItems.map(({ id, text, icon: Icon }, index) => (
+                  <motion.div
+                    key={id}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Link
+                      to={text}
+                      smooth={true}
+                      duration={500}
+                      offset={-70}
+                      onClick={() => setMenuOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:text-white transition-all duration-300 font-medium group ${
+                        activeSection === text
+                          ? "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/50"
+                          : "hover:bg-white/10"
+                      }`}
+                    >
+                      <Icon size={20} className="text-cyan-400" />
+                      <span className="flex-1">{text}</span>
+                      {activeSection === text && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-2 h-2 rounded-full bg-cyan-400"
+                        />
+                      )}
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              {/* Drawer Footer - Enhanced */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-gradient-to-t from-black/50 to-transparent"
+              >
+                <div className="text-center space-y-2">
+                  <div className="flex items-center justify-center gap-2 text-xs">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span className="text-gray-400">Available for work</span>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    © 2024 Rustam Khan | All rights reserved
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+export default Navbar;
