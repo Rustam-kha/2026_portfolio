@@ -121,10 +121,9 @@ function Home() {
   ];
 
   const socialLinks = [
-    { icon: FaGithub, href: "https://github.com/Rustam-khan", color: "hover:text-gray-300", bg: "hover:bg-gray-600/20" },
-    { icon: FaLinkedin, href: "https://linkedin.com/in/rustam-khan", color: "hover:text-blue-500", bg: "hover:bg-blue-500/20" },
-    { icon: FaTwitter, href: "https://twitter.com", color: "hover:text-sky-400", bg: "hover:bg-sky-400/20" },
-    { icon: FaDev, href: "https://dev.to", color: "hover:text-gray-300", bg: "hover:bg-gray-500/20" },
+    { icon: FaGithub, href: "https://github.com/Rustam-kha", color: "hover:text-gray-300", bg: "hover:bg-gray-600/20" },
+    { icon: FaLinkedin, href: "https://www.linkedin.com/in/rustam-khan-87a7302b6/", color: "hover:text-blue-500", bg: "hover:bg-blue-500/20" }
+    
   ];
 
   return (
