@@ -9,7 +9,8 @@ import {
   FaUser, 
   FaBriefcase, 
   FaCode, 
-  FaEnvelope ,FaCertificate
+  FaEnvelope,
+  FaCertificate
 } from "react-icons/fa";
 import { FaFileAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
@@ -188,6 +189,7 @@ function Navbar() {
               whileTap={{ scale: 0.95 }}
               onClick={() => setMenuOpen(true)}
               className="md:hidden p-2 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 text-white hover:bg-white/10 hover:border-cyan-500/50 transition-all duration-300"
+              aria-label="Open menu"
             >
               <AiOutlineMenu size={24} />
             </motion.button>
@@ -245,13 +247,14 @@ function Navbar() {
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setMenuOpen(false)}
                   className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                  aria-label="Close menu"
                 >
                   <IoCloseSharp size={24} className="text-white" />
                 </motion.button>
               </div>
 
               {/* Drawer Navigation - Enhanced */}
-              <nav className="flex flex-col p-6 gap-3">
+              <nav className="flex flex-col p-6 gap-3 overflow-y-auto max-h-[calc(100vh-200px)]">
                 {navItems.map(({ id, text, icon: Icon }, index) => (
                   <motion.div
                     key={id}
