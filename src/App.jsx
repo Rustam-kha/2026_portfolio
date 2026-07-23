@@ -1,3 +1,4 @@
+// src/App.jsx
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
@@ -9,10 +10,11 @@ import { Toaster } from "react-hot-toast";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Certificates from "./components/Certificates";
 import Resume from "./components/Resume";
+
 function App() {
   return (
     <>
-      <div>
+      <div className="overflow-x-hidden">
         <Navbar />
         <Home />
         <About />
@@ -24,7 +26,17 @@ function App() {
         <Footer />
       </div>
       <WhatsAppButton/>
-      <Toaster />
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#1a1a1a',
+            color: '#fff',
+            border: '1px solid rgba(255,255,255,0.1)',
+          },
+        }}
+      />
     </>
   );
 }
