@@ -1,4 +1,4 @@
-// src/components/WhatsAppButton.jsx (Glassmorphism Version)
+// src/components/WhatsAppButton.jsx
 import { FaWhatsapp } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -14,7 +14,7 @@ function WhatsAppButton() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5, type: "spring" }}
-      className="fixed bottom-6 right-6 z-50"
+      className="fixed bottom-6 right-4 sm:right-6 z-50"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -27,7 +27,7 @@ function WhatsAppButton() {
         rel="noopener noreferrer"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="relative flex items-center gap-3 px-5 py-3 bg-white/10 backdrop-blur-xl border border-white/30 rounded-full shadow-2xl overflow-hidden group"
+        className="relative flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2.5 sm:py-3 bg-white/10 backdrop-blur-xl border border-white/30 rounded-full shadow-2xl overflow-hidden group"
       >
         {/* Animated Border */}
         <motion.div
@@ -44,17 +44,17 @@ function WhatsAppButton() {
         />
         
         {/* Icon */}
-        <FaWhatsapp className="text-green-400 text-2xl group-hover:scale-110 transition-transform" />
+        <FaWhatsapp className="text-green-400 text-xl sm:text-2xl group-hover:scale-110 transition-transform" />
         
-        {/* Text */}
-        <span className="text-white font-semibold text-sm hidden sm:inline">
+        {/* Text - Hidden on small screens */}
+        <span className="text-white font-semibold text-xs sm:text-sm hidden sm:inline">
           Let's Connect
         </span>
         
         {/* Status Indicator */}
         <div className="relative">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping" />
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse" />
+          <div className="absolute inset-0 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-ping" />
         </div>
       </motion.a>
     </motion.div>
