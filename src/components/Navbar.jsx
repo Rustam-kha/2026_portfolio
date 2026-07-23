@@ -31,7 +31,6 @@ function Navbar() {
     { id: 7, text: "Contacts", icon: FaEnvelope },
   ];
 
-  // Handle scroll effect for navbar background
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -40,7 +39,6 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
@@ -52,7 +50,6 @@ function Navbar() {
     };
   }, [menuOpen]);
 
-  // Navbar variants for animations
   const navbarVariants = {
     hidden: { y: -100 },
     visible: { 
@@ -94,7 +91,6 @@ function Navbar() {
 
   return (
     <>
-      {/* Navbar with dynamic background */}
       <motion.div
         variants={navbarVariants}
         initial="hidden"
@@ -107,7 +103,7 @@ function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 sm:h-16 md:h-20">
-            {/* Logo Section - Fully Responsive */}
+            {/* Logo Section */}
             <Link
               to="Home"
               smooth={true}
@@ -115,7 +111,6 @@ function Navbar() {
               offset={-70}
               className="group flex items-center gap-2 sm:gap-3 cursor-pointer relative flex-shrink-0"
             >
-              {/* Animated glow behind logo */}
               <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative flex-shrink-0">
@@ -127,7 +122,6 @@ function Navbar() {
                 />
               </div>
               
-              {/* Logo Text - Hidden on very small screens */}
               <div className="hidden xs:block">
                 <h1 className="font-mono font-bold text-sm sm:text-base md:text-lg lg:text-xl bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent group-hover:from-cyan-400 group-hover:to-blue-500 transition-all duration-300">
                   Rustam<span className="text-cyan-400">.dev</span>
@@ -138,7 +132,6 @@ function Navbar() {
                     <span className="hidden xs:inline">Full Stack</span>
                     <span className="xs:hidden">Dev</span>
                   </p>
-                  {/* Status Indicator - Mobile Friendly */}
                   <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-green-500"></span>
@@ -150,7 +143,7 @@ function Navbar() {
               </div>
             </Link>
 
-            {/* Desktop Navigation - Enhanced */}
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-0.5 lg:gap-1 bg-white/5 backdrop-blur-sm rounded-full p-1 border border-white/10 shadow-lg">
               {navItems.map(({ id, text, icon: Icon }) => (
                 <Link
@@ -169,7 +162,6 @@ function Navbar() {
                       : "text-gray-300 hover:text-white"
                   }`}
                 >
-                  {/* Active Background */}
                   {activeSection === text && (
                     <motion.div
                       layoutId="activeNav"
@@ -178,7 +170,6 @@ function Navbar() {
                     />
                   )}
                   
-                  {/* Hover Effect */}
                   {hoveredItem === id && activeSection !== text && (
                     <motion.div
                       initial={{ scale: 0, opacity: 0 }}
@@ -188,7 +179,6 @@ function Navbar() {
                     />
                   )}
                   
-                  {/* Content */}
                   <span className="relative z-10 flex items-center gap-1.5 lg:gap-2">
                     <Icon size={12} className="lg:text-[14px]" />
                     <span className="hidden lg:inline">{text}</span>
@@ -198,7 +188,7 @@ function Navbar() {
               ))}
             </div>
 
-            {/* Mobile Menu Button - Enhanced */}
+            {/* Mobile Menu Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -212,11 +202,10 @@ function Navbar() {
         </div>
       </motion.div>
 
-      {/* Mobile Drawer Menu - Enhanced with Animations */}
+      {/* Mobile Drawer Menu */}
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               variants={backdropVariants}
               initial="hidden"
@@ -226,7 +215,6 @@ function Navbar() {
               onClick={() => setMenuOpen(false)}
             />
 
-            {/* Drawer */}
             <motion.div
               variants={mobileMenuVariants}
               initial="hidden"
@@ -234,7 +222,6 @@ function Navbar() {
               exit="exit"
               className="fixed right-0 top-0 h-full w-[280px] xs:w-80 sm:w-96 z-50 bg-gradient-to-br from-gray-900 via-gray-900 to-black shadow-2xl border-l border-white/10"
             >
-              {/* Drawer Header - Enhanced */}
               <div className="flex justify-between items-center p-4 sm:p-6 border-b border-white/10 bg-gradient-to-r from-cyan-500/10 to-blue-500/10">
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
@@ -279,7 +266,6 @@ function Navbar() {
                 </motion.button>
               </div>
 
-              {/* Drawer Navigation - Enhanced */}
               <nav className="flex flex-col p-4 sm:p-6 gap-2 sm:gap-3 overflow-y-auto max-h-[calc(100vh-180px)]">
                 {navItems.map(({ id, text, icon: Icon }, index) => (
                   <motion.div
@@ -314,7 +300,6 @@ function Navbar() {
                 ))}
               </nav>
 
-              {/* Drawer Footer - Enhanced */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
