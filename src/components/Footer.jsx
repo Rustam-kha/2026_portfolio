@@ -41,7 +41,6 @@ function Footer() {
     { name: "Contact", to: "Contacts", icon: "📧" },
   ];
 
-  // Show scroll to top button
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
@@ -50,7 +49,6 @@ function Footer() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to top function
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -73,7 +71,7 @@ function Footer() {
 
   return (
     <footer className="relative bg-gradient-to-b from-gray-900 via-gray-900 to-black overflow-hidden">
-      {/* Animated Background - Responsive */}
+      {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl opacity-10 animate-pulse"></div>
         <div className="absolute bottom-0 right-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-2xl sm:blur-3xl opacity-10 animate-pulse delay-1000"></div>
@@ -86,7 +84,7 @@ function Footer() {
         transition={{ duration: 3, repeat: Infinity }}
       />
 
-      {/* Scroll to Top Button - Responsive */}
+      {/* Scroll to Top Button - Fixed positioning */}
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
@@ -110,7 +108,7 @@ function Footer() {
           animate="visible"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12"
         >
-          {/* Brand Section - Responsive */}
+          {/* Brand Section */}
           <motion.div variants={itemVariants} className="space-y-3 sm:space-y-4 text-center lg:text-left">
             <motion.div 
               className="flex items-center justify-center lg:justify-start gap-2"
@@ -129,7 +127,6 @@ function Footer() {
               MERN Stack Developer | WordPress Expert | Building scalable web applications with modern technologies.
             </p>
             
-            {/* Animated Status */}
             <div className="flex items-center justify-center lg:justify-start gap-1.5 sm:gap-2 text-[10px] sm:text-xs">
               <span className="relative flex h-1.5 sm:h-2 w-1.5 sm:w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -139,7 +136,7 @@ function Footer() {
             </div>
           </motion.div>
 
-          {/* Quick Links - Responsive */}
+          {/* Quick Links */}
           <motion.div variants={itemVariants} className="text-center lg:text-left">
             <h3 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 flex items-center justify-center lg:justify-start gap-2">
               <FaCode className="text-cyan-400 text-xs sm:text-sm" />
@@ -175,14 +172,14 @@ function Footer() {
             </ul>
           </motion.div>
 
-          {/* Social & Info Section - Responsive */}
+          {/* Social & Info Section */}
           <motion.div variants={itemVariants} className="text-center lg:text-left sm:col-span-2 lg:col-span-1">
             <h3 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 flex items-center justify-center lg:justify-start gap-2">
               <FaRocket className="text-cyan-400 text-xs sm:text-sm" />
               Connect
             </h3>
             
-            <div className="flex justify-center lg:justify-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <div className="flex justify-center lg:justify-start gap-3 sm:gap-4 mb-4 sm:mb-6 flex-wrap">
               {socialLinks.map(({ icon: Icon, href, label, color, gradient }) => (
                 <motion.a
                   key={label}
@@ -202,7 +199,7 @@ function Footer() {
               ))}
             </div>
             
-            {/* Contact Info - Responsive */}
+            {/* Contact Info */}
             <motion.div 
               className="bg-gradient-to-br from-white/5 to-white/[0.02] rounded-lg p-2.5 sm:p-3 border border-white/10 hover:border-cyan-500/50 transition-all duration-300"
               whileHover={{ scale: 1.02 }}
@@ -218,7 +215,6 @@ function Footer() {
               </a>
             </motion.div>
 
-            {/* Response Time - Responsive */}
             <div className="mt-2.5 sm:mt-3 flex items-center justify-center lg:justify-start gap-1.5 sm:gap-2 text-[8px] sm:text-[10px] text-gray-500">
               <span className="relative flex h-1 w-1 sm:h-1.5 sm:w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -229,7 +225,7 @@ function Footer() {
           </motion.div>
         </motion.div>
 
-        {/* Bottom Bar - Responsive */}
+        {/* Bottom Bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
