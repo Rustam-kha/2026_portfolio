@@ -1,25 +1,11 @@
 // src/components/Portfolio.jsx
 import { useState } from "react";
 import {
-  FaWordpress,
-  FaReact,
   FaExternalLinkAlt,
   FaGithub,
-  FaShoppingCart,
-  FaNewspaper,
-  FaShieldAlt,
-  FaTruck,
-  FaBuilding,
-  FaHeartbeat,
-  FaHardHat,
-  FaUtensils,
-  FaCheckCircle,
-  FaEye,
-  FaStar,
   FaArrowRight,
   FaRocket,
 } from "react-icons/fa";
-import { SiMongodb, SiExpress, SiTailwindcss, SiJavascript } from "react-icons/si";
 import { motion, AnimatePresence } from "framer-motion";
 
 function Portfolio() {
@@ -29,11 +15,11 @@ function Portfolio() {
 
   const categories = [
     { id: "all", name: "All Projects", icon: <FaRocket className="text-sm" />, color: "from-purple-500 to-pink-500" },
-    { id: "wordpress", name: "WordPress", icon: <FaWordpress className="text-sm" />, color: "from-blue-500 to-cyan-500" },
-    { id: "mern", name: "MERN Stack", icon: <FaReact className="text-sm" />, color: "from-green-500 to-emerald-500" },
+    { id: "wordpress", name: "WordPress", icon: "📝", color: "from-blue-500 to-cyan-500" },
+    { id: "mern", name: "MERN Stack", icon: "⚛️", color: "from-green-500 to-emerald-500" },
   ];
 
-  // WordPress Projects
+  // WordPress Projects with image paths from public folder
   const wordpressProjects = [
     {
       id: 1,
@@ -41,7 +27,7 @@ function Portfolio() {
       category: "wordpress",
       type: "Business Financing",
       description: "Business financing platform for New York-based financial services provider.",
-      icon: FaBuilding,
+      image: "/BrookeStore.png",
       technologies: ["WordPress", "Elementor", "WooCommerce"],
       link: "https://brookestonefunding.com/",
       color: "from-blue-500 to-cyan-500",
@@ -52,7 +38,7 @@ function Portfolio() {
       category: "wordpress",
       type: "Security Solutions",
       description: "Security surveillance platform with real-time monitoring.",
-      icon: FaShieldAlt,
+      image: "/HawkEye_Guardians.png",
       technologies: ["WordPress", "Elementor"],
       link: "https://hawkeyeguardians.com/",
       color: "from-gray-700 to-gray-900",
@@ -63,7 +49,7 @@ function Portfolio() {
       category: "wordpress",
       type: "Blogging Platform",
       description: "Multi-topic blogging platform.",
-      icon: FaNewspaper,
+      image: "/myblogjournal.png",
       technologies: ["WordPress", "SEO"],
       link: "https://myblogjournal.com/",
       color: "from-purple-500 to-pink-500",
@@ -74,7 +60,7 @@ function Portfolio() {
       category: "wordpress",
       type: "Health & Wellness",
       description: "Recovery centre website with booking system.",
-      icon: FaHeartbeat,
+      image: "/primalRecovery.png",
       technologies: ["WordPress", "Booking System"],
       link: "https://primalrecovery.net.au/",
       color: "from-red-500 to-orange-500",
@@ -85,7 +71,7 @@ function Portfolio() {
       category: "wordpress",
       type: "Contracting Services",
       description: "MEP contracting platform for Saudi market.",
-      icon: FaHardHat,
+      image: "/Renovix.png",
       technologies: ["WordPress", "Elementor"],
       link: "https://renovixmepcontracting.com/",
       color: "from-green-500 to-teal-500",
@@ -96,7 +82,7 @@ function Portfolio() {
       category: "wordpress",
       type: "Logistics & Shipping",
       description: "Global shipping platform with real-time tracking.",
-      icon: FaTruck,
+      image: "/ubl.png",
       technologies: ["WordPress", "WooCommerce"],
       link: "https://ublco.net/",
       color: "from-yellow-500 to-orange-500",
@@ -107,7 +93,7 @@ function Portfolio() {
       category: "wordpress",
       type: "Fashion E-Commerce",
       description: "E-commerce website for women's boutique.",
-      icon: FaShoppingCart,
+      image: "/myblogjournal.png", // Using placeholder, replace with actual
       technologies: ["WordPress", "WooCommerce"],
       link: "https://humayunabbottabad.com/",
       color: "from-pink-500 to-rose-500",
@@ -118,7 +104,7 @@ function Portfolio() {
       category: "wordpress",
       type: "Medicine E-Commerce",
       description: "E-commerce website for pharmacy.",
-      icon: FaShoppingCart,
+      image: "/thinkPharmacy.jpg",
       technologies: ["WordPress", "WooCommerce"],
       link: "https://thinkpharmacy.com.au/",
       color: "from-pink-500 to-rose-500",
@@ -129,7 +115,7 @@ function Portfolio() {
       category: "wordpress",
       type:"Duct Cleaning",
       description: "Duct cleaning in Melbourne starting from $10 per Duct",
-      icon: FaHardHat,
+      image: "/stage3.png",
       technologies: ["WordPress", "Elementor"],
       link: "https://www.staging3.mrductcleaning.com.au/",
       color: "from-green-500 to-teal-500",
@@ -144,7 +130,7 @@ function Portfolio() {
       category: "mern",
       type: "Food Delivery",
       description: "Full-stack food delivery platform with real-time tracking.",
-      icon: FaUtensils,
+      image: "/profile.png",
       technologies: ["React.js", "Node.js", "MongoDB", "Express.js"],
       link: "https://daily-dish-app.vercel.app/",
       github: "https://github.com/Rustam-khan",
@@ -156,7 +142,7 @@ function Portfolio() {
       category: "mern",
       type: "VR Application",
       description: "Immersive 3D VR experience with interactive environments.",
-      icon: FaEye,
+      image: "/profile.png",
       technologies: ["React.js", "Three.js", "WebGL", "Tailwind CSS"],
       link: "https://virtualrbyrmkhan.netlify.app/",
       github: "https://github.com/Rustam-khan",
@@ -168,7 +154,7 @@ function Portfolio() {
       category: "mern",
       type: "Productivity",
       description: "Advanced task management with drag-and-drop functionality.",
-      icon: FaCheckCircle,
+      image: "/profile.png",
       technologies: ["React.js", "Node.js", "MongoDB", "Express.js", "Tailwind CSS"],
       link: "https://todo-list-by-rsutamkhan.netlify.app/",
       github: "https://github.com/Rustam-khan",
@@ -260,11 +246,20 @@ function Portfolio() {
               className="group"
             >
               <div className="relative h-full bg-gradient-to-br from-white/5 to-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:border-cyan-500/50 transition-all duration-500">
-                {/* Card Header */}
-                <div className={`relative h-48 bg-gradient-to-br ${project.color} overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/40" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <project.icon className="text-white text-7xl opacity-30 group-hover:scale-110 transition-transform duration-500" />
+                {/* Card Image Header */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  
+                  {/* Project Type Badge */}
+                  <div className="absolute bottom-4 left-4">
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${project.color} text-white`}>
+                      {project.type}
+                    </span>
                   </div>
 
                   {/* Hover Overlay */}
@@ -285,7 +280,6 @@ function Portfolio() {
                 <div className="p-6">
                   <div>
                     <h3 className="text-xl font-bold text-white mb-1">{project.title}</h3>
-                    <p className="text-cyan-400 text-sm mb-3">{project.type}</p>
                   </div>
 
                   <p className="text-gray-400 text-sm mb-4 line-clamp-2">
@@ -340,19 +334,22 @@ function Portfolio() {
               className="relative max-w-2xl w-full bg-gradient-to-br from-gray-900 to-black rounded-2xl border border-white/20 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Header */}
-              <div className={`h-32 bg-gradient-to-r ${selectedProject.color} relative overflow-hidden`}>
-                <div className="absolute inset-0 bg-black/40" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <selectedProject.icon className="text-white text-6xl opacity-20" />
+              {/* Modal Header with Image */}
+              <div className="h-48 relative overflow-hidden">
+                <img 
+                  src={selectedProject.image} 
+                  alt={selectedProject.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute bottom-4 left-6">
+                  <h3 className="text-2xl font-bold text-white mb-1">{selectedProject.title}</h3>
+                  <p className="text-cyan-400 text-sm">{selectedProject.type}</p>
                 </div>
               </div>
               
               {/* Modal Content */}
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-white mb-2">{selectedProject.title}</h3>
-                <p className="text-cyan-400 text-sm mb-4">{selectedProject.type}</p>
-                
                 <p className="text-gray-300 mb-6 leading-relaxed">{selectedProject.description}</p>
                 
                 <h4 className="text-white font-semibold mb-3">Technologies Used</h4>
