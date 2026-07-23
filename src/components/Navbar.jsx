@@ -17,9 +17,10 @@ const navItems = [
   { name: "Home", icon: FaHome },
   { name: "About", icon: FaUser },
   { name: "Portfolio", icon: FaBriefcase },
-  { name: "Experience", icon: FaCode },
+ 
   { name: "Certificates", icon: FaCertificate },
-  { name: "Resume", icon: FaFileAlt },
+  { name: "Resume", icon: FaFileAlt },'
+   { name: "Experience", icon: FaCode },
   { name: "Contact", icon: FaEnvelope },
 ];
 
