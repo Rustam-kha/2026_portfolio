@@ -1,8 +1,8 @@
 // src/pages/AboutPage.jsx
 import About from '../components/About';
-import Breadcrumb from '../components/Breadcrumb';
-import HeroSection from '../components/HeroSection';
-import CTASection from '../components/CTASection';
+import Breadcrumb from './components/Breadcrumb';
+import HeroSection from './components/HeroSection';
+import CTASection from './components/CTASection';
 
 const AboutPage = () => {
   return (
