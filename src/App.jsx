@@ -50,19 +50,19 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import ScrollToTop from './components/ScrollToTop';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import PortfolioPage from './pages/PortfolioPage';
-import ServicesPage from './pages/ServicesPage';
-import ExperiencePage from './pages/ExperiencePage';
-import CertificatesPage from './pages/CertificatesPage';
-import ContactPage from './pages/ContactPage';
-import ResumePage from './pages/ResumePage';
+import HomePage from './components/HomePage';
+import AboutPage from './components/AboutPage';
+import PortfolioPage from './components/PortfolioPage';
+import ServicesPage from './components/ServicesPage';
+import ExperiencePage from './components/ExperiencePage';
+import CertificatesPage from './components/CertificatesPage';
+import ContactPage from './components/ContactPage';
+import ResumePage from './components/ResumePage';
 import './App.css';
 
 function App() {
   useEffect(() => {
-    document.title = "Rustam Khan - Full Stack Developer | WordPress & MERN Expert";
+    document.title = "Rustam Khan - WordPress & MERN Expert | Agentic AI";
   }, []);
 
   return (
