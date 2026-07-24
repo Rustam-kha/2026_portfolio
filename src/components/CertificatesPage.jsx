@@ -1,8 +1,8 @@
 // src/pages/CertificatesPage.jsx
-import Certificates from '../components/Certificates';
-import Breadcrumb from '../components/Breadcrumb';
-import HeroSection from '../components/HeroSection';
-import CTASection from '../components/CTASection';
+import Certificates from './Certificates';
+import Breadcrumb from './Breadcrumb';
+import HeroSection from './HeroSection';
+import CTASection from './CTASection';
 
 const CertificatesPage = () => {
   return (
