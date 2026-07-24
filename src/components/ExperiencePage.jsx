@@ -1,8 +1,8 @@
 // src/pages/ExperiencePage.jsx
-import Experience from '../components/Experience';
-import Breadcrumb from '../components/Breadcrumb';
-import HeroSection from '../components/HeroSection';
-import CTASection from '../components/CTASection';
+import Experience from './Experience';
+import Breadcrumb from './Breadcrumb';
+import HeroSection from './HeroSection';
+import CTASection from './CTASection';
 
 const ExperiencePage = () => {
   return (
