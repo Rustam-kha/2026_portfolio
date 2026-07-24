@@ -1,5 +1,5 @@
 // src/pages/HomePage.jsx
-import Home from './components/Home';
+import Home from './Home';
 
 const HomePage = () => {
   return <Home />;
