@@ -1,8 +1,8 @@
 // src/pages/PortfolioPage.jsx
-import Portfolio from '../components/Portfolio';
-import Breadcrumb from '../components/Breadcrumb';
-import HeroSection from '../components/HeroSection';
-import CTASection from '../components/CTASection';
+import Portfolio from './Portfolio';
+import Breadcrumb from './Breadcrumb';
+import HeroSection from './HeroSection';
+import CTASection from './CTASection';
 
 const PortfolioPage = () => {
   return (
