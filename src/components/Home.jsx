@@ -1,514 +1,745 @@
 // src/components/Home.jsx
-import {
-  FaFacebook,
-  FaLinkedin,
-  FaYoutube,
-  FaTelegram,
-  FaHtml5,
-  FaCss3Alt,
-  FaJsSquare,
-  FaBootstrap,
-  FaJava,
-  FaPython,
-  FaNodeJs,
-  FaDatabase,
-  FaWordpress,
-  FaCode,
-  FaRocket,
-  FaArrowRight,
-  FaGithub,
-  FaTwitter,
-  FaInstagram,
-  FaMedium,
-  FaDev,
-  FaStackOverflow,
-} from "react-icons/fa";
-import {
-  SiNextdotjs,
-  SiWix,
-  SiMongodb,
-  SiExpress,
-  SiTailwindcss,
-  SiTensorflow,
-  SiTypescript,
-  SiGraphql,
-  SiDocker,
-  SiKubernetes,
-} from "react-icons/si";
-import { RiReactjsLine, RiTailwindCssFill, RiVuejsLine } from "react-icons/ri";
-import { ReactTyped } from "react-typed";
-import { useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Link as ScrollLink } from "react-scroll";
+import { motion } from 'framer-motion';
+import { FaCode, FaWordpress, FaReact, FaRocket } from 'react-icons/fa';
+import { SiShopify, SiNextdotjs, SiWix } from 'react-icons/si';
+import ProjectSlider from './ProjectSlider';
 
-function Home() {
-  const [stats, setStats] = useState({ projects: 0, experience: 0, clients: 0 });
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Smooth mouse follow for 3D effect
-  const springConfig = { damping: 30, stiffness: 300 };
-  const x = useSpring(mouseX, springConfig);
-  const y = useSpring(mouseY, springConfig);
-  const rotateX = useTransform(y, [-300, 300], [15, -15]);
-  const rotateY = useTransform(x, [-300, 300], [-15, 15]);
-
-  // Animated stats counter
-  useEffect(() => {
-    const counters = [
-      { key: "projects", target: 15, duration: 2000 },
-      { key: "experience", target: 1, duration: 2000 },
-      { key: "clients", target: 12, duration: 2000 },
-    ];
-
-    counters.forEach(({ key, target, duration }) => {
-      let start = 0;
-      const increment = target / (duration / 16);
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-          setStats(prev => ({ ...prev, [key]: target }));
-          clearInterval(timer);
-        } else {
-          setStats(prev => ({ ...prev, [key]: Math.floor(start) }));
-        }
-      }, 16);
-    });
-  }, []);
-
-  // Track mouse for 3D effect (desktop only)
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const rect = document.getElementById('profile-container')?.getBoundingClientRect();
-      if (rect) {
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        mouseX.set(e.clientX - centerX);
-        mouseY.set(e.clientY - centerY);
-      }
-    };
-    
-    // Only add mouse tracking on desktop
-    if (window.innerWidth >= 1024) {
-      window.addEventListener('mousemove', handleMouseMove);
+const Home = () => {
+  const featuredProjects = [
+    {
+      id: 1,
+      title: "Brookestone Funding",
+      category: "WordPress",
+      description: "Business financing platform with custom WordPress development.",
+      image: "/BrookeStore.png",
+      technologies: ["WordPress", "Elementor", "WooCommerce"],
+      link: "https://brookestonefunding.com/"
+    },
+    {
+      id: 2,
+      title: "HawkEye Guardians",
+      category: "WordPress",
+      description: "Security surveillance platform with real-time monitoring.",
+      image: "/HawkEye_Guardians.png",
+      technologies: ["WordPress", "Elementor"],
+      link: "https://hawkeyeguardians.com/"
+    },
+    {
+      id: 3,
+      title: "Primal Recovery Centre",
+      category: "WordPress",
+      description: "Recovery centre website with integrated booking system.",
+      image: "/primalRecovery.png",
+      technologies: ["WordPress", "Booking System"],
+      link: "https://primalrecovery.net.au/"
+    },
+    {
+      id: 4,
+      title: "Universal Bridge Logistics",
+      category: "WordPress",
+      description: "Global shipping platform with real-time tracking.",
+      image: "/ubl.png",
+      technologies: ["WordPress", "WooCommerce"],
+      link: "https://ublco.net/"
     }
-    
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  const frontendSkills = [
-    { icon: FaHtml5, name: "HTML5", color: "text-orange-500", level: 95 },
-    { icon: FaCss3Alt, name: "CSS3", color: "text-blue-500", level: 90 },
-    { icon: FaJsSquare, name: "JavaScript", color: "text-yellow-500", level: 88 },
-    { icon: RiReactjsLine, name: "React.js", color: "text-cyan-400", level: 85 },
-    { icon: SiNextdotjs, name: "Next.js", color: "text-white", level: 80 },
-    { icon: FaBootstrap, name: "Bootstrap", color: "text-purple-600", level: 90 },
-    { icon: RiTailwindCssFill, name: "Tailwind", color: "text-teal-500", level: 92 },
-    { icon: SiTypescript, name: "TypeScript", color: "text-blue-600", level: 75 },
   ];
 
-  const backendSkills = [
-    { icon: FaNodeJs, name: "Node.js", color: "text-green-500", level: 85 },
-    { icon: SiExpress, name: "Express.js", color: "text-gray-400", level: 82 },
-    { icon: SiMongodb, name: "MongoDB", color: "text-green-600", level: 80 },
-    { icon: FaDatabase, name: "SQL", color: "text-blue-400", level: 78 },
-    { icon: FaPython, name: "Python", color: "text-yellow-400", level: 75 },
-    { icon: FaJava, name: "Java", color: "text-red-500", level: 70 },
-    { icon: SiGraphql, name: "GraphQL", color: "text-pink-500", level: 72 },
-    { icon: SiDocker, name: "Docker", color: "text-blue-500", level: 68 },
-  ];
-
-  const otherSkills = [
-    { icon: FaWordpress, name: "WordPress", color: "text-blue-600", level: 90 },
-    { icon: SiWix, name: "Wix", color: "text-cyan-500", level: 85 },
-    { icon: SiTensorflow, name: "AI/ML", color: "text-orange-400", level: 65 },
-    { icon: SiKubernetes, name: "Kubernetes", color: "text-blue-500", level: 60 },
-  ];
-
-  const socialLinks = [
-    { icon: FaGithub, href: "https://github.com/Rustam-kha", color: "hover:text-gray-300", bg: "hover:bg-gray-600/20" },
-    { icon: FaLinkedin, href: "https://www.linkedin.com/in/rustam-khan-87a7302b6/", color: "hover:text-blue-500", bg: "hover:bg-blue-500/20" }
+  const services = [
+    { icon: FaWordpress, title: "WordPress", description: "Custom WordPress development & WooCommerce solutions" },
+    { icon: FaReact, title: "MERN Stack", description: "Full-stack development with MongoDB, Express, React, Node.js" },
+    { icon: SiShopify, title: "Shopify", description: "E-commerce store development and customization" },
+    { icon: SiNextdotjs, title: "Next.js", description: "SEO-friendly React applications with Next.js" },
+    { icon: SiWix, title: "Wix", description: "Custom Wix website development and design" },
+    { icon: FaRocket, title: "N8N Automation", description: "Automate workflows with n8n and LangChain" }
   ];
 
   return (
-    <div name="Home" className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-      {/* Animated Background Particles - Responsive count */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 bg-cyan-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-2000"></div>
-        
-        {/* Floating Particles - Reduced on mobile */}
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-0.5 sm:w-1 h-0.5 sm:h-1 bg-cyan-400 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -50, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 5 + 3,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
-      </div>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black" />
+          <div className="absolute top-20 left-10 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-cyan-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-2000" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:50px_50px]" />
+        </div>
 
-      {/* Grid Pattern - Responsive size */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:30px_30px_sm:40px_40px_md:50px_50px]" />
-
-      <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-32">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-8 sm:gap-12 lg:gap-20">
-          {/* Left Section - Responsive */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, type: "spring" }}
-            className="w-full lg:w-1/2"
-          >
-            {/* Premium Badge - Responsive */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 backdrop-blur-sm mb-4 sm:mb-6"
-            >
-              <span className="relative flex h-1.5 sm:h-2 w-1.5 sm:w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 sm:h-2 w-1.5 sm:w-2 bg-green-500"></span>
-              </span>
-              <span className="text-[10px] sm:text-xs font-mono text-cyan-400">✨ Available for Work</span>
-            </motion.div>
-
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-3xl sm:text-5xl lg:text-7xl font-bold mb-3 sm:mb-4"
-            >
-              <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent text-base sm:text-lg lg:text-2xl block">
-                Hello, I'm
-              </span>
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent text-3xl sm:text-5xl lg:text-7xl">
-                Rustam Khan
-              </span>
-            </motion.h1>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-base sm:text-xl lg:text-3xl text-gray-300 mb-4 sm:mb-6"
-            >
-              <ReactTyped
-                strings={[
-                  "MERN Stack Developer 🚀",
-                  "Next.js Expert ⚛️",
-                  "WordPress Developer 📝",
-                  "Wix Specialist 🎨",
-                  "Python Developer 🐍",
-                  "AI Enthusiast 🤖",
-                  "Full Stack Developer 💻",
-                ]}
-                typeSpeed={50}
-                backSpeed={30}
-                backDelay={1000}
-                loop={true}
-                className="text-cyan-400 font-semibold text-base sm:text-xl lg:text-3xl"
-              />
-            </motion.div>
-
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-gray-400 leading-relaxed mb-6 sm:mb-8 max-w-xl text-sm sm:text-base lg:text-lg"
-            >
-              Mern-stack developer with <span className="text-cyan-400 font-semibold">1+ years</span> of experience building scalable web applications. 
-              Specialized in <span className="text-blue-400">MERN stack</span>, <span className="text-purple-400">Next.js</span>, and <span className="text-green-400">WordPress customization</span>. 
-              Currently expanding into <span className="text-orange-400">AI and machine learning</span> to create smarter solutions.
-            </motion.p>
-
-            {/* Stats Section - Responsive Grid */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8"
-            >
-              {[
-                { label: "Projects", value: stats.projects, suffix: "+", icon: FaCode, gradient: "from-cyan-500 to-blue-500" },
-                { label: "Experience", value: stats.experience, suffix: " yr", icon: FaRocket, gradient: "from-purple-500 to-pink-500" },
-                { label: "Clients", value: stats.clients, suffix: "+", icon: FaDatabase, gradient: "from-green-500 to-emerald-500" },
-              ].map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  whileHover={{ scale: 1.05, y: -8 }}
-                  className="relative group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl"
-                    style={{ background: `linear-gradient(135deg, ${stat.gradient.split(' ')[1]}, ${stat.gradient.split(' ')[3]})` }}
-                  />
-                  <div className="relative text-center p-2 sm:p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 group-hover:border-cyan-500/50 transition-all duration-300">
-                    <stat.icon className="text-cyan-400 text-base sm:text-xl mx-auto mb-1 sm:mb-2 opacity-0 group-hover:opacity-100 transition-opacity group-hover:scale-110" />
-                    <div className="text-xl sm:text-3xl font-bold text-white">
-                      {stat.value}{stat.suffix}
-                    </div>
-                    <div className="text-[10px] sm:text-sm text-gray-400 mt-0.5 sm:mt-1">{stat.label}</div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* CTA Buttons - Responsive */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap gap-2 sm:gap-4 mb-6 sm:mb-8"
-            >
-              <ScrollLink to="Portfolio" smooth={true} duration={500} offset={-70} className="cursor-pointer flex-1 sm:flex-none">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full sm:w-auto px-4 sm:px-8 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 group text-sm sm:text-base"
-                >
-                  <FaRocket className="group-hover:rotate-12 transition-transform text-sm sm:text-base" />
-                  <span>View Projects</span>
-                  <FaArrowRight className="group-hover:translate-x-1 transition-transform text-sm sm:text-base" />
-                </motion.button>
-              </ScrollLink>
-              
-              <ScrollLink to="Contacts" smooth={true} duration={500} offset={-70} className="cursor-pointer flex-1 sm:flex-none">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full sm:w-auto px-4 sm:px-8 py-2.5 sm:py-3 rounded-full border-2 border-cyan-500/50 text-cyan-400 font-semibold hover:bg-cyan-500/10 hover:border-cyan-500 transition-all duration-300 text-sm sm:text-base"
-                >
-                  Let's Talk
-                </motion.button>
-              </ScrollLink>
-            </motion.div>
-
-            {/* Social Links - Responsive */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="flex gap-2 sm:gap-3"
-            >
-              {socialLinks.map(({ icon: Icon, href, color, bg }, idx) => (
-                <motion.a
-                  key={idx}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.15, y: -5, rotate: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`p-2 sm:p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 text-gray-400 ${color} ${bg} transition-all duration-300`}
-                >
-                  <Icon size={16} className="sm:text-[20px]" />
-                </motion.a>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          {/* Right Section - 3D Profile Card - Responsive */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, type: "spring" }}
-            className="w-full lg:w-1/2 flex justify-center"
-          >
-            <div
-              id="profile-container"
-              className="relative perspective-1000"
-              style={{ perspective: "1000px" }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
             >
               <motion.div
-                style={{
-                  rotateX: window.innerWidth >= 1024 ? rotateX : 0,
-                  rotateY: window.innerWidth >= 1024 ? rotateY : 0,
-                  transition: "transform 0.1s ease-out",
-                }}
-                className="relative"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="inline-block"
               >
-                {/* Outer Glow Ring - Responsive */}
-                <div className="absolute -inset-2 sm:-inset-4 rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 blur-xl sm:blur-2xl opacity-60 animate-pulse" />
-                
-                {/* Rotating Border */}
-                <div className="absolute inset-0 rounded-full overflow-hidden">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                    className="absolute -inset-2 rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600"
-                    style={{ padding: "2px sm:3px" }}
-                  />
-                </div>
-
-                {/* Profile Image - Responsive Sizes */}
-                <div className="relative w-52 h-52 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
-                  <img
-                    src="/RUSTAM_KHAN_UPWORK_PROFILE.png"
-                    alt="Rustam Khan"
-                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                </div>
-
-                {/* Floating Tech Icons - Responsive sizes */}
-                <motion.div
-                  animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  className="absolute -top-2 sm:-top-5 -right-2 sm:-right-5 p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 shadow-lg"
-                >
-                  <RiReactjsLine className="text-white text-lg sm:text-2xl" />
-                </motion.div>
-                
-                <motion.div
-                  animate={{ y: [0, 15, 0], rotate: [0, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                  className="absolute -bottom-2 sm:-bottom-5 -left-2 sm:-left-5 p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg"
-                >
-                  <SiNextdotjs className="text-white text-lg sm:text-2xl" />
-                </motion.div>
-                
-                <motion.div
-                  animate={{ y: [0, -12, 0], rotate: [0, 5, 0] }}
-                  transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
-                  className="absolute top-1/2 -right-4 sm:-right-8 p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-green-500 to-teal-500 shadow-lg"
-                >
-                  <FaNodeJs className="text-white text-lg sm:text-2xl" />
-                </motion.div>
-
-                <motion.div
-                  animate={{ y: [0, 12, 0], rotate: [0, -5, 0] }}
-                  transition={{ duration: 3.8, repeat: Infinity, delay: 0.8 }}
-                  className="absolute top-1/3 -left-4 sm:-left-8 p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 shadow-lg"
-                >
-                  <FaWordpress className="text-white text-lg sm:text-2xl" />
-                </motion.div>
+                <span className="px-4 py-2 bg-cyan-500/20 border border-cyan-500/30 rounded-full text-cyan-400 text-sm font-medium">
+                  Available for Hire
+                </span>
               </motion.div>
+
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                <span className="text-white">Hello, I'm </span>
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+                  Rustam Khan
+                </span>
+              </h1>
+              
+              <h2 className="text-xl md:text-2xl text-gray-300">
+                Full Stack Developer | WordPress & MERN Expert
+              </h2>
+              
+              <p className="text-gray-400 text-lg max-w-lg leading-relaxed">
+                Building powerful, scalable, and user-friendly web applications 
+                with modern technologies. 3+ years of experience delivering 
+                high-quality digital solutions.
+              </p>
+
+              <div className="flex flex-wrap gap-4 pt-4">
+                <a
+                  href="/contact"
+                  className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 flex items-center gap-2 group"
+                >
+                  Hire Me
+                </a>
+                <a
+                  href="/portfolio"
+                  className="px-8 py-3 border border-white/20 rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-300"
+                >
+                  View My Work
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="hidden md:flex justify-center"
+            >
+              <div className="relative">
+                <div className="w-80 h-80 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 animate-pulse opacity-20" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <FaCode className="text-8xl text-cyan-400" />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 bg-gray-900/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <span className="text-cyan-400 font-semibold text-sm uppercase tracking-wider">Services</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+              What I <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Do</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto rounded-full mt-4" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-cyan-500/50 transition-all duration-300 group"
+              >
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <service.icon className="text-3xl text-cyan-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">{service.title}</h3>
+                <p className="text-gray-400 text-sm">{service.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Projects Slider */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <span className="text-cyan-400 font-semibold text-sm uppercase tracking-wider">Portfolio</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+              Featured <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Projects</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto rounded-full mt-4" />
+          </motion.div>
+
+          <ProjectSlider projects={featuredProjects} />
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="relative bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-3xl p-12 text-center border border-white/10 overflow-hidden"
+          >
+            <div className="absolute inset-0">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full filter blur-3xl animate-pulse" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full filter blur-3xl animate-pulse delay-1000" />
+            </div>
+
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                Ready to Build Your <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Dream Project</span>?
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
+                Let's collaborate and create something amazing together. I'm just a message away!
+              </p>
+              <a
+                href="/contact"
+                className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
+              >
+                Get in Touch
+              </a>
             </div>
           </motion.div>
         </div>
-
-        {/* Skills Section - Premium Design - Responsive */}
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 sm:mt-20 md:mt-28"
-        >
-          <div className="text-center mb-8 sm:mb-12">
-            <motion.div
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="inline-block mb-2 sm:mb-3"
-            >
-              <FaCode className="text-2xl sm:text-4xl text-cyan-400" />
-            </motion.div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-              Tech Stack & Expertise
-            </h2>
-            <div className="w-16 sm:w-24 h-0.5 sm:h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 mx-auto mt-3 sm:mt-4 rounded-full" />
-            <p className="text-gray-400 mt-3 sm:mt-4 text-sm sm:text-base">Technologies I work with to bring ideas to life</p>
-          </div>
-
-          {/* Frontend Skills - Responsive */}
-          <div className="mb-8 sm:mb-12">
-            <h3 className="text-base sm:text-xl font-semibold text-cyan-400 mb-4 sm:mb-6 text-center flex items-center justify-center gap-2">
-              <span className="w-8 sm:w-12 h-px bg-cyan-400"></span>
-              Frontend Development
-              <span className="w-8 sm:w-12 h-px bg-cyan-400"></span>
-            </h3>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-              {frontendSkills.map((skill, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.03, type: "spring" }}
-                  whileHover={{ scale: 1.15, y: -8 }}
-                  className="group relative"
-                >
-                  <div className="p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-cyan-500/50 transition-all duration-300">
-                    <skill.icon className={`text-2xl sm:text-4xl md:text-5xl ${skill.color} group-hover:scale-110 transition-transform duration-300`} />
-                    <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-[8px] sm:text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap bg-gray-900 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
-                      {skill.name} • {skill.level}%
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Backend Skills - Responsive */}
-          <div className="mb-8 sm:mb-12">
-            <h3 className="text-base sm:text-xl font-semibold text-blue-400 mb-4 sm:mb-6 text-center flex items-center justify-center gap-2">
-              <span className="w-8 sm:w-12 h-px bg-blue-400"></span>
-              Backend & Database
-              <span className="w-8 sm:w-12 h-px bg-blue-400"></span>
-            </h3>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-              {backendSkills.map((skill, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.03, type: "spring" }}
-                  whileHover={{ scale: 1.15, y: -8 }}
-                  className="group relative"
-                >
-                  <div className="p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-blue-500/50 transition-all duration-300">
-                    <skill.icon className={`text-2xl sm:text-4xl md:text-5xl ${skill.color} group-hover:scale-110 transition-transform duration-300`} />
-                    <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-[8px] sm:text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap bg-gray-900 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
-                      {skill.name} • {skill.level}%
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Other Skills - Responsive */}
-          <div>
-            <h3 className="text-base sm:text-xl font-semibold text-purple-400 mb-4 sm:mb-6 text-center flex items-center justify-center gap-2">
-              <span className="w-8 sm:w-12 h-px bg-purple-400"></span>
-              CMS & Emerging Tech
-              <span className="w-8 sm:w-12 h-px bg-purple-400"></span>
-            </h3>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-              {otherSkills.map((skill, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.03, type: "spring" }}
-                  whileHover={{ scale: 1.15, y: -8 }}
-                  className="group relative"
-                >
-                  <div className="p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-purple-500/50 transition-all duration-300">
-                    <skill.icon className={`text-2xl sm:text-4xl md:text-5xl ${skill.color} group-hover:scale-110 transition-transform duration-300`} />
-                    <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-[8px] sm:text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap bg-gray-900 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
-                      {skill.name} • {skill.level}%
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </div>
+      </section>
     </div>
   );
-}
+};
 
 export default Home;
+// // src/components/Home.jsx
+// import {
+//   FaFacebook,
+//   FaLinkedin,
+//   FaYoutube,
+//   FaTelegram,
+//   FaHtml5,
+//   FaCss3Alt,
+//   FaJsSquare,
+//   FaBootstrap,
+//   FaJava,
+//   FaPython,
+//   FaNodeJs,
+//   FaDatabase,
+//   FaWordpress,
+//   FaCode,
+//   FaRocket,
+//   FaArrowRight,
+//   FaGithub,
+//   FaTwitter,
+//   FaInstagram,
+//   FaMedium,
+//   FaDev,
+//   FaStackOverflow,
+// } from "react-icons/fa";
+// import {
+//   SiNextdotjs,
+//   SiWix,
+//   SiMongodb,
+//   SiExpress,
+//   SiTailwindcss,
+//   SiTensorflow,
+//   SiTypescript,
+//   SiGraphql,
+//   SiDocker,
+//   SiKubernetes,
+// } from "react-icons/si";
+// import { RiReactjsLine, RiTailwindCssFill, RiVuejsLine } from "react-icons/ri";
+// import { ReactTyped } from "react-typed";
+// import { useState, useEffect } from "react";
+// import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+// import { Link as ScrollLink } from "react-scroll";
+
+// function Home() {
+//   const [stats, setStats] = useState({ projects: 0, experience: 0, clients: 0 });
+//   const mouseX = useMotionValue(0);
+//   const mouseY = useMotionValue(0);
+
+//   // Smooth mouse follow for 3D effect
+//   const springConfig = { damping: 30, stiffness: 300 };
+//   const x = useSpring(mouseX, springConfig);
+//   const y = useSpring(mouseY, springConfig);
+//   const rotateX = useTransform(y, [-300, 300], [15, -15]);
+//   const rotateY = useTransform(x, [-300, 300], [-15, 15]);
+
+//   // Animated stats counter
+//   useEffect(() => {
+//     const counters = [
+//       { key: "projects", target: 15, duration: 2000 },
+//       { key: "experience", target: 1, duration: 2000 },
+//       { key: "clients", target: 12, duration: 2000 },
+//     ];
+
+//     counters.forEach(({ key, target, duration }) => {
+//       let start = 0;
+//       const increment = target / (duration / 16);
+//       const timer = setInterval(() => {
+//         start += increment;
+//         if (start >= target) {
+//           setStats(prev => ({ ...prev, [key]: target }));
+//           clearInterval(timer);
+//         } else {
+//           setStats(prev => ({ ...prev, [key]: Math.floor(start) }));
+//         }
+//       }, 16);
+//     });
+//   }, []);
+
+//   // Track mouse for 3D effect (desktop only)
+//   useEffect(() => {
+//     const handleMouseMove = (e) => {
+//       const rect = document.getElementById('profile-container')?.getBoundingClientRect();
+//       if (rect) {
+//         const centerX = rect.left + rect.width / 2;
+//         const centerY = rect.top + rect.height / 2;
+//         mouseX.set(e.clientX - centerX);
+//         mouseY.set(e.clientY - centerY);
+//       }
+//     };
+    
+//     // Only add mouse tracking on desktop
+//     if (window.innerWidth >= 1024) {
+//       window.addEventListener('mousemove', handleMouseMove);
+//     }
+    
+//     return () => window.removeEventListener('mousemove', handleMouseMove);
+//   }, [mouseX, mouseY]);
+
+//   const frontendSkills = [
+//     { icon: FaHtml5, name: "HTML5", color: "text-orange-500", level: 95 },
+//     { icon: FaCss3Alt, name: "CSS3", color: "text-blue-500", level: 90 },
+//     { icon: FaJsSquare, name: "JavaScript", color: "text-yellow-500", level: 88 },
+//     { icon: RiReactjsLine, name: "React.js", color: "text-cyan-400", level: 85 },
+//     { icon: SiNextdotjs, name: "Next.js", color: "text-white", level: 80 },
+//     { icon: FaBootstrap, name: "Bootstrap", color: "text-purple-600", level: 90 },
+//     { icon: RiTailwindCssFill, name: "Tailwind", color: "text-teal-500", level: 92 },
+//     { icon: SiTypescript, name: "TypeScript", color: "text-blue-600", level: 75 },
+//   ];
+
+//   const backendSkills = [
+//     { icon: FaNodeJs, name: "Node.js", color: "text-green-500", level: 85 },
+//     { icon: SiExpress, name: "Express.js", color: "text-gray-400", level: 82 },
+//     { icon: SiMongodb, name: "MongoDB", color: "text-green-600", level: 80 },
+//     { icon: FaDatabase, name: "SQL", color: "text-blue-400", level: 78 },
+//     { icon: FaPython, name: "Python", color: "text-yellow-400", level: 75 },
+//     { icon: FaJava, name: "Java", color: "text-red-500", level: 70 },
+//     { icon: SiGraphql, name: "GraphQL", color: "text-pink-500", level: 72 },
+//     { icon: SiDocker, name: "Docker", color: "text-blue-500", level: 68 },
+//   ];
+
+//   const otherSkills = [
+//     { icon: FaWordpress, name: "WordPress", color: "text-blue-600", level: 90 },
+//     { icon: SiWix, name: "Wix", color: "text-cyan-500", level: 85 },
+//     { icon: SiTensorflow, name: "AI/ML", color: "text-orange-400", level: 65 },
+//     { icon: SiKubernetes, name: "Kubernetes", color: "text-blue-500", level: 60 },
+//   ];
+
+//   const socialLinks = [
+//     { icon: FaGithub, href: "https://github.com/Rustam-kha", color: "hover:text-gray-300", bg: "hover:bg-gray-600/20" },
+//     { icon: FaLinkedin, href: "https://www.linkedin.com/in/rustam-khan-87a7302b6/", color: "hover:text-blue-500", bg: "hover:bg-blue-500/20" }
+//   ];
+
+//   return (
+//     <div name="Home" className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+//       {/* Animated Background Particles - Responsive count */}
+//       <div className="absolute inset-0">
+//         <div className="absolute top-20 left-10 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+//         <div className="absolute bottom-20 right-10 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-1000"></div>
+//         <div className="absolute top-1/2 left-1/2 w-48 sm:w-72 md:w-96 h-48 sm:h-72 md:h-96 bg-cyan-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-2000"></div>
+        
+//         {/* Floating Particles - Reduced on mobile */}
+//         {[...Array(30)].map((_, i) => (
+//           <motion.div
+//             key={i}
+//             className="absolute w-0.5 sm:w-1 h-0.5 sm:h-1 bg-cyan-400 rounded-full"
+//             style={{
+//               left: `${Math.random() * 100}%`,
+//               top: `${Math.random() * 100}%`,
+//             }}
+//             animate={{
+//               y: [0, -50, 0],
+//               opacity: [0, 1, 0],
+//               scale: [0, 1, 0],
+//             }}
+//             transition={{
+//               duration: Math.random() * 5 + 3,
+//               repeat: Infinity,
+//               delay: Math.random() * 5,
+//             }}
+//           />
+//         ))}
+//       </div>
+
+//       {/* Grid Pattern - Responsive size */}
+//       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:30px_30px_sm:40px_40px_md:50px_50px]" />
+
+//       <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-32">
+//         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 sm:gap-12 lg:gap-20">
+//           {/* Left Section - Responsive */}
+//           <motion.div
+//             initial={{ opacity: 0, x: -50 }}
+//             animate={{ opacity: 1, x: 0 }}
+//             transition={{ duration: 0.8, type: "spring" }}
+//             className="w-full lg:w-1/2"
+//           >
+//             {/* Premium Badge - Responsive */}
+//             <motion.div 
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.2 }}
+//               className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 backdrop-blur-sm mb-4 sm:mb-6"
+//             >
+//               <span className="relative flex h-1.5 sm:h-2 w-1.5 sm:w-2">
+//                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+//                 <span className="relative inline-flex rounded-full h-1.5 sm:h-2 w-1.5 sm:w-2 bg-green-500"></span>
+//               </span>
+//               <span className="text-[10px] sm:text-xs font-mono text-cyan-400">✨ Available for Work</span>
+//             </motion.div>
+
+//             <motion.h1 
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.3 }}
+//               className="text-3xl sm:text-5xl lg:text-7xl font-bold mb-3 sm:mb-4"
+//             >
+//               <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent text-base sm:text-lg lg:text-2xl block">
+//                 Hello, I'm
+//               </span>
+//               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent text-3xl sm:text-5xl lg:text-7xl">
+//                 Rustam Khan
+//               </span>
+//             </motion.h1>
+
+//             <motion.div 
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.4 }}
+//               className="text-base sm:text-xl lg:text-3xl text-gray-300 mb-4 sm:mb-6"
+//             >
+//               <ReactTyped
+//                 strings={[
+//                   "MERN Stack Developer 🚀",
+//                   "Next.js Expert ⚛️",
+//                   "WordPress Developer 📝",
+//                   "Wix Specialist 🎨",
+//                   "Python Developer 🐍",
+//                   "AI Enthusiast 🤖",
+//                   "Full Stack Developer 💻",
+//                 ]}
+//                 typeSpeed={50}
+//                 backSpeed={30}
+//                 backDelay={1000}
+//                 loop={true}
+//                 className="text-cyan-400 font-semibold text-base sm:text-xl lg:text-3xl"
+//               />
+//             </motion.div>
+
+//             <motion.p 
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.5 }}
+//               className="text-gray-400 leading-relaxed mb-6 sm:mb-8 max-w-xl text-sm sm:text-base lg:text-lg"
+//             >
+//               Mern-stack developer with <span className="text-cyan-400 font-semibold">1+ years</span> of experience building scalable web applications. 
+//               Specialized in <span className="text-blue-400">MERN stack</span>, <span className="text-purple-400">Next.js</span>, and <span className="text-green-400">WordPress customization</span>. 
+//               Currently expanding into <span className="text-orange-400">AI and machine learning</span> to create smarter solutions.
+//             </motion.p>
+
+//             {/* Stats Section - Responsive Grid */}
+//             <motion.div 
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.6 }}
+//               className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8"
+//             >
+//               {[
+//                 { label: "Projects", value: stats.projects, suffix: "+", icon: FaCode, gradient: "from-cyan-500 to-blue-500" },
+//                 { label: "Experience", value: stats.experience, suffix: " yr", icon: FaRocket, gradient: "from-purple-500 to-pink-500" },
+//                 { label: "Clients", value: stats.clients, suffix: "+", icon: FaDatabase, gradient: "from-green-500 to-emerald-500" },
+//               ].map((stat, idx) => (
+//                 <motion.div
+//                   key={idx}
+//                   whileHover={{ scale: 1.05, y: -8 }}
+//                   className="relative group"
+//                 >
+//                   <div className="absolute inset-0 bg-gradient-to-r rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl"
+//                     style={{ background: `linear-gradient(135deg, ${stat.gradient.split(' ')[1]}, ${stat.gradient.split(' ')[3]})` }}
+//                   />
+//                   <div className="relative text-center p-2 sm:p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 group-hover:border-cyan-500/50 transition-all duration-300">
+//                     <stat.icon className="text-cyan-400 text-base sm:text-xl mx-auto mb-1 sm:mb-2 opacity-0 group-hover:opacity-100 transition-opacity group-hover:scale-110" />
+//                     <div className="text-xl sm:text-3xl font-bold text-white">
+//                       {stat.value}{stat.suffix}
+//                     </div>
+//                     <div className="text-[10px] sm:text-sm text-gray-400 mt-0.5 sm:mt-1">{stat.label}</div>
+//                   </div>
+//                 </motion.div>
+//               ))}
+//             </motion.div>
+
+//             {/* CTA Buttons - Responsive */}
+//             <motion.div 
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.7 }}
+//               className="flex flex-wrap gap-2 sm:gap-4 mb-6 sm:mb-8"
+//             >
+//               <ScrollLink to="Portfolio" smooth={true} duration={500} offset={-70} className="cursor-pointer flex-1 sm:flex-none">
+//                 <motion.button
+//                   whileHover={{ scale: 1.05 }}
+//                   whileTap={{ scale: 0.95 }}
+//                   className="w-full sm:w-auto px-4 sm:px-8 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 group text-sm sm:text-base"
+//                 >
+//                   <FaRocket className="group-hover:rotate-12 transition-transform text-sm sm:text-base" />
+//                   <span>View Projects</span>
+//                   <FaArrowRight className="group-hover:translate-x-1 transition-transform text-sm sm:text-base" />
+//                 </motion.button>
+//               </ScrollLink>
+              
+//               <ScrollLink to="Contacts" smooth={true} duration={500} offset={-70} className="cursor-pointer flex-1 sm:flex-none">
+//                 <motion.button
+//                   whileHover={{ scale: 1.05 }}
+//                   whileTap={{ scale: 0.95 }}
+//                   className="w-full sm:w-auto px-4 sm:px-8 py-2.5 sm:py-3 rounded-full border-2 border-cyan-500/50 text-cyan-400 font-semibold hover:bg-cyan-500/10 hover:border-cyan-500 transition-all duration-300 text-sm sm:text-base"
+//                 >
+//                   Let's Talk
+//                 </motion.button>
+//               </ScrollLink>
+//             </motion.div>
+
+//             {/* Social Links - Responsive */}
+//             <motion.div 
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.8 }}
+//               className="flex gap-2 sm:gap-3"
+//             >
+//               {socialLinks.map(({ icon: Icon, href, color, bg }, idx) => (
+//                 <motion.a
+//                   key={idx}
+//                   href={href}
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   whileHover={{ scale: 1.15, y: -5, rotate: 5 }}
+//                   whileTap={{ scale: 0.95 }}
+//                   className={`p-2 sm:p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 text-gray-400 ${color} ${bg} transition-all duration-300`}
+//                 >
+//                   <Icon size={16} className="sm:text-[20px]" />
+//                 </motion.a>
+//               ))}
+//             </motion.div>
+//           </motion.div>
+
+//           {/* Right Section - 3D Profile Card - Responsive */}
+//           <motion.div
+//             initial={{ opacity: 0, scale: 0.8 }}
+//             animate={{ opacity: 1, scale: 1 }}
+//             transition={{ duration: 0.8, type: "spring" }}
+//             className="w-full lg:w-1/2 flex justify-center"
+//           >
+//             <div
+//               id="profile-container"
+//               className="relative perspective-1000"
+//               style={{ perspective: "1000px" }}
+//             >
+//               <motion.div
+//                 style={{
+//                   rotateX: window.innerWidth >= 1024 ? rotateX : 0,
+//                   rotateY: window.innerWidth >= 1024 ? rotateY : 0,
+//                   transition: "transform 0.1s ease-out",
+//                 }}
+//                 className="relative"
+//               >
+//                 {/* Outer Glow Ring - Responsive */}
+//                 <div className="absolute -inset-2 sm:-inset-4 rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 blur-xl sm:blur-2xl opacity-60 animate-pulse" />
+                
+//                 {/* Rotating Border */}
+//                 <div className="absolute inset-0 rounded-full overflow-hidden">
+//                   <motion.div
+//                     animate={{ rotate: 360 }}
+//                     transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+//                     className="absolute -inset-2 rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600"
+//                     style={{ padding: "2px sm:3px" }}
+//                   />
+//                 </div>
+
+//                 {/* Profile Image - Responsive Sizes */}
+//                 <div className="relative w-52 h-52 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
+//                   <img
+//                     src="/RUSTAM_KHAN_UPWORK_PROFILE.png"
+//                     alt="Rustam Khan"
+//                     className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
+//                   />
+//                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+//                 </div>
+
+//                 {/* Floating Tech Icons - Responsive sizes */}
+//                 <motion.div
+//                   animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
+//                   transition={{ duration: 3, repeat: Infinity }}
+//                   className="absolute -top-2 sm:-top-5 -right-2 sm:-right-5 p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 shadow-lg"
+//                 >
+//                   <RiReactjsLine className="text-white text-lg sm:text-2xl" />
+//                 </motion.div>
+                
+//                 <motion.div
+//                   animate={{ y: [0, 15, 0], rotate: [0, -10, 0] }}
+//                   transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+//                   className="absolute -bottom-2 sm:-bottom-5 -left-2 sm:-left-5 p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg"
+//                 >
+//                   <SiNextdotjs className="text-white text-lg sm:text-2xl" />
+//                 </motion.div>
+                
+//                 <motion.div
+//                   animate={{ y: [0, -12, 0], rotate: [0, 5, 0] }}
+//                   transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+//                   className="absolute top-1/2 -right-4 sm:-right-8 p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-green-500 to-teal-500 shadow-lg"
+//                 >
+//                   <FaNodeJs className="text-white text-lg sm:text-2xl" />
+//                 </motion.div>
+
+//                 <motion.div
+//                   animate={{ y: [0, 12, 0], rotate: [0, -5, 0] }}
+//                   transition={{ duration: 3.8, repeat: Infinity, delay: 0.8 }}
+//                   className="absolute top-1/3 -left-4 sm:-left-8 p-2 sm:p-3 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 shadow-lg"
+//                 >
+//                   <FaWordpress className="text-white text-lg sm:text-2xl" />
+//                 </motion.div>
+//               </motion.div>
+//             </div>
+//           </motion.div>
+//         </div>
+
+//         {/* Skills Section - Premium Design - Responsive */}
+//         <motion.div 
+//           initial={{ opacity: 0, y: 50 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 0.6, delay: 0.4 }}
+//           className="mt-16 sm:mt-20 md:mt-28"
+//         >
+//           <div className="text-center mb-8 sm:mb-12">
+//             <motion.div
+//               animate={{ y: [0, -5, 0] }}
+//               transition={{ duration: 2, repeat: Infinity }}
+//               className="inline-block mb-2 sm:mb-3"
+//             >
+//               <FaCode className="text-2xl sm:text-4xl text-cyan-400" />
+//             </motion.div>
+//             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+//               Tech Stack & Expertise
+//             </h2>
+//             <div className="w-16 sm:w-24 h-0.5 sm:h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 mx-auto mt-3 sm:mt-4 rounded-full" />
+//             <p className="text-gray-400 mt-3 sm:mt-4 text-sm sm:text-base">Technologies I work with to bring ideas to life</p>
+//           </div>
+
+//           {/* Frontend Skills - Responsive */}
+//           <div className="mb-8 sm:mb-12">
+//             <h3 className="text-base sm:text-xl font-semibold text-cyan-400 mb-4 sm:mb-6 text-center flex items-center justify-center gap-2">
+//               <span className="w-8 sm:w-12 h-px bg-cyan-400"></span>
+//               Frontend Development
+//               <span className="w-8 sm:w-12 h-px bg-cyan-400"></span>
+//             </h3>
+//             <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+//               {frontendSkills.map((skill, idx) => (
+//                 <motion.div
+//                   key={idx}
+//                   initial={{ opacity: 0, scale: 0 }}
+//                   animate={{ opacity: 1, scale: 1 }}
+//                   transition={{ delay: idx * 0.03, type: "spring" }}
+//                   whileHover={{ scale: 1.15, y: -8 }}
+//                   className="group relative"
+//                 >
+//                   <div className="p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-cyan-500/50 transition-all duration-300">
+//                     <skill.icon className={`text-2xl sm:text-4xl md:text-5xl ${skill.color} group-hover:scale-110 transition-transform duration-300`} />
+//                     <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-[8px] sm:text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap bg-gray-900 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
+//                       {skill.name} • {skill.level}%
+//                     </div>
+//                   </div>
+//                 </motion.div>
+//               ))}
+//             </div>
+//           </div>
+
+//           {/* Backend Skills - Responsive */}
+//           <div className="mb-8 sm:mb-12">
+//             <h3 className="text-base sm:text-xl font-semibold text-blue-400 mb-4 sm:mb-6 text-center flex items-center justify-center gap-2">
+//               <span className="w-8 sm:w-12 h-px bg-blue-400"></span>
+//               Backend & Database
+//               <span className="w-8 sm:w-12 h-px bg-blue-400"></span>
+//             </h3>
+//             <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+//               {backendSkills.map((skill, idx) => (
+//                 <motion.div
+//                   key={idx}
+//                   initial={{ opacity: 0, scale: 0 }}
+//                   animate={{ opacity: 1, scale: 1 }}
+//                   transition={{ delay: idx * 0.03, type: "spring" }}
+//                   whileHover={{ scale: 1.15, y: -8 }}
+//                   className="group relative"
+//                 >
+//                   <div className="p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-blue-500/50 transition-all duration-300">
+//                     <skill.icon className={`text-2xl sm:text-4xl md:text-5xl ${skill.color} group-hover:scale-110 transition-transform duration-300`} />
+//                     <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-[8px] sm:text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap bg-gray-900 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
+//                       {skill.name} • {skill.level}%
+//                     </div>
+//                   </div>
+//                 </motion.div>
+//               ))}
+//             </div>
+//           </div>
+
+//           {/* Other Skills - Responsive */}
+//           <div>
+//             <h3 className="text-base sm:text-xl font-semibold text-purple-400 mb-4 sm:mb-6 text-center flex items-center justify-center gap-2">
+//               <span className="w-8 sm:w-12 h-px bg-purple-400"></span>
+//               CMS & Emerging Tech
+//               <span className="w-8 sm:w-12 h-px bg-purple-400"></span>
+//             </h3>
+//             <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+//               {otherSkills.map((skill, idx) => (
+//                 <motion.div
+//                   key={idx}
+//                   initial={{ opacity: 0, scale: 0 }}
+//                   animate={{ opacity: 1, scale: 1 }}
+//                   transition={{ delay: idx * 0.03, type: "spring" }}
+//                   whileHover={{ scale: 1.15, y: -8 }}
+//                   className="group relative"
+//                 >
+//                   <div className="p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-purple-500/50 transition-all duration-300">
+//                     <skill.icon className={`text-2xl sm:text-4xl md:text-5xl ${skill.color} group-hover:scale-110 transition-transform duration-300`} />
+//                     <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-[8px] sm:text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap bg-gray-900 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
+//                       {skill.name} • {skill.level}%
+//                     </div>
+//                   </div>
+//                 </motion.div>
+//               ))}
+//             </div>
+//           </div>
+//         </motion.div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Home;
